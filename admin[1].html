@@ -1,0 +1,11 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GGHSS Admin</title><style>
+body{font-family:Arial;background:#f2f6fb;margin:0}.top{background:#123b72;color:white;padding:22px 6%}.box{max-width:800px;margin:30px auto;background:white;padding:28px;border-radius:14px;box-shadow:0 4px 20px #0001}input,textarea{width:100%;padding:11px;margin:8px 0 16px;box-sizing:border-box}button{background:#123b72;color:#fff;border:0;padding:11px 18px;border-radius:6px}.hidden{display:none}.item{padding:12px;background:#f7f9fc;margin:10px 0;border-radius:8px}</style></head><body>
+<div class="top"><h1>School Admin Panel</h1><p>Govt. Girls Higher Secondary School, Rehli</p></div>
+<div class="box" id="login"><h2>Admin Login</h2><input id="u" placeholder="Username"><input id="p" type="password" placeholder="Password"><button onclick="login()">Login</button><p id="e"></p><p><small>Demo: admin / admin123</small></p></div>
+<div class="box hidden" id="panel"><h2>Manage Notices</h2><input id="t" placeholder="Notice title"><textarea id="x" placeholder="Notice details"></textarea><button onclick="add()">Publish Notice</button><div id="items"></div><hr><p>Production version can add secure login, staff, gallery, PDFs, results and other school content.</p><a href="index.html">View Public Website</a></div>
+<script>
+function login(){if(u.value==='admin'&&p.value==='admin123'){document.getElementById('login').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');render()}else e.textContent='Invalid demo login.'}
+function add(){let a=JSON.parse(localStorage.getItem('gghss_notices')||'[]');if(!t.value||!x.value)return alert('Enter title and notice');a.push({title:t.value,text:x.value});localStorage.setItem('gghss_notices',JSON.stringify(a));t.value='';x.value='';render()}
+function del(i){let a=JSON.parse(localStorage.getItem('gghss_notices')||'[]');a.splice(i,1);localStorage.setItem('gghss_notices',JSON.stringify(a));render()}
+function render(){let a=JSON.parse(localStorage.getItem('gghss_notices')||'[]');items.innerHTML=a.map((v,i)=>'<div class="item"><b>'+v.title+'</b><br>'+v.text+'<br><button onclick="del('+i+')">Delete</button></div>').join('')||'<p>No notices.</p>'}
+</script></body></html>
